@@ -1,3 +1,4 @@
+from typing import List, Union
 import random
 import sqlite3
 import pandas as pd
@@ -7,6 +8,13 @@ def get_sqlite_db_connection(db_name: str) -> sqlite3.Connection:
     """Returns SQLite database connection object, given the name of the database you wish to connect to"""
     connection_obj = sqlite3.connect(database=db_name)
     return connection_obj
+
+
+def dataframe_to_list(df: pd.DataFrame) -> Union[List[dict], List]:
+    """Converts Pandas DataFrame to list of records or empty list"""
+    if df.empty:
+        return []
+    return df.to_dict(orient='records')
 
 
 def dataframe_to_sports_db(df: pd.DataFrame) -> None:

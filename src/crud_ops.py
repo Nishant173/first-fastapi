@@ -14,6 +14,7 @@ def create_sports_table() -> None:
 
 
 def get_sports_records(limit: Optional[int] = -1) -> pd.DataFrame:
+    """Returns Pandas DataFrame of sports records"""
     if limit > 0:
         query = f""" SELECT * FROM {config.TBL_SPORTS} LIMIT {limit}; """
     else:
@@ -56,6 +57,7 @@ def delete_sports_record(id_: str) -> None:
 
 
 def add_sports_record(name: str, age: int, fav_sport: str) -> None:
+    """Adds one sports record, based on certain parameters given"""
     conn = utils.get_sqlite_db_connection(db_name=config.DB_SPORTS)
     conn.execute(f"""
         INSERT INTO {config.TBL_SPORTS}(ID, Name, Age, FavouriteSport)
@@ -70,6 +72,7 @@ def update_sports_record(id_: str,
                          name: Optional[str] = None,
                          age: Optional[int] = None,
                          fav_sport: Optional[str] = None) -> None:
+    """Updates one sports record, based on certain parameters given"""
     df = get_sports_records()
     df_record_to_update = df[df['ID'] == id_]
     if df_record_to_update.empty:

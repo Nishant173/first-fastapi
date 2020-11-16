@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional, Union
 import crud_ops
 
 def filter_sports_records(id_: Optional[str] = None,
@@ -6,7 +6,7 @@ def filter_sports_records(id_: Optional[str] = None,
                           age: Optional[int] = None,
                           fav_sport: Optional[str] = None,
                           min_age: Optional[int] = None,
-                          max_age: Optional[int] = None):
+                          max_age: Optional[int] = None) -> Union[List[dict], List]:
     """Gets list of records filtered by criteria specified"""
     df = crud_ops.get_sports_records()
     if id_:

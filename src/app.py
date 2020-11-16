@@ -1,21 +1,21 @@
-from fastapi import FastAPI
 from typing import List, Optional, Union
+from fastapi import FastAPI
 import crud_ops
 import filters
+import utils
 
 app = FastAPI()
 
 @app.get('/', status_code=200)
-def home():
+def home() -> dict:
     return {"message": "This is the Home page", "status_code": 200}
 
 
 @app.get('/records', status_code=200)
 def get_sports_records() -> Union[List[dict], List]:
     df_records = crud_ops.get_sports_records()
-    if df_records.empty:
-        return []
-    return df_records.to_dict(orient='records')
+    records = utils.dataframe_to_list(df=df_records)
+    return records
 
 
 @app.get('/record', status_code=200)
@@ -30,7 +30,7 @@ def filter_sports_records(id_: Optional[str] = None,
                           age: Optional[int] = None,
                           fav_sport: Optional[str] = None,
                           min_age: Optional[int] = None,
-                          max_age: Optional[int] = None):
+                          max_age: Optional[int] = None) -> Union[List[dict], List]:
     records = filters.filter_sports_records(id_=id_,
                                             name=name,
                                             age=age,
