@@ -27,12 +27,14 @@ def get_sports_record(id_: str) -> dict:
 @app.get('/records/filter', status_code=200)
 def filter_sports_records(id_: Optional[str] = None,
                           name: Optional[str] = None,
+                          name__contains: Optional[str] = None,
                           age: Optional[int] = None,
                           fav_sport: Optional[str] = None,
                           min_age: Optional[int] = None,
                           max_age: Optional[int] = None) -> Union[List[dict], List]:
     records = filters.filter_sports_records(id_=id_,
                                             name=name,
+                                            name__contains=name__contains,
                                             age=age,
                                             fav_sport=fav_sport,
                                             min_age=min_age,
